@@ -1,4 +1,4 @@
-package com.flaviomu.game.config;
+package com.flaviomu.games.config;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

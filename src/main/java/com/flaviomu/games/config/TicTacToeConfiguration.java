@@ -1,4 +1,4 @@
-package com.flaviomu.game.config;
+package com.flaviomu.games.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,9 +22,15 @@ public class TicTacToeConfiguration {
 
     private Properties properties;
 
+    /**
+     * Builds the TicTacToe games configurations
+     *
+     * @param propertiesFileName the
+     */
     public TicTacToeConfiguration(String propertiesFileName) {
         try {
             properties = new Properties();
+            log.debug("Loading properties file: " + propertiesFileName);
             properties.load(this.getClass().getClassLoader().getResourceAsStream(propertiesFileName));
         } catch (NullPointerException ex) {
             log.error("Properties file not found: " + propertiesFileName);
@@ -75,6 +81,9 @@ public class TicTacToeConfiguration {
         return PLAYER2_SYMBOL_DEFAULT;
     }
 
+    /*
+        Load the default properties values
+     */
     private void loadDefaultProperties() {
         properties.setProperty(playgroundSizeKey, PLAYGROUND_SIZE_DEFAULT.toString());
         properties.setProperty(computerSymbolKey, COMPUTER_SYMBOL_DEFAULT);

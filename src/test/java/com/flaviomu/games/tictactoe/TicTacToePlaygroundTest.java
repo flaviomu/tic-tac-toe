@@ -1,6 +1,6 @@
-package com.flaviomu.game.tictactoe;
+package com.flaviomu.games.tictactoe;
 
-import com.flaviomu.game.config.TicTacToeConfiguration;
+import com.flaviomu.games.config.TicTacToeConfiguration;
 import org.junit.jupiter.api.*;
 
 import java.util.function.Consumer;

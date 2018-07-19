@@ -1,6 +1,6 @@
-package com.flaviomu.game.tictactoe;
+package com.flaviomu.games.tictactoe;
 
-import com.flaviomu.game.generic.Move;
+import com.flaviomu.games.generic.Move;
 
 public class TicTacToeMove extends Move {
 

@@ -1,9 +1,9 @@
-package com.flaviomu.game.tictactoe;
+package com.flaviomu.games.tictactoe;
 
-import com.flaviomu.game.config.TicTacToeConfiguration;
-import com.flaviomu.game.core.Computer;
-import com.flaviomu.game.core.Human;
-import com.flaviomu.game.generic.Player;
+import com.flaviomu.games.config.TicTacToeConfiguration;
+import com.flaviomu.games.core.Computer;
+import com.flaviomu.games.core.Human;
+import com.flaviomu.games.generic.Player;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ class TicTacToeGameTest {
 
     @BeforeAll
     void setUpAll() {
-        List<Player> players = new ArrayList<>();
+        players = new ArrayList<>();
         players.add(new Computer("Computer", TicTacToeConfiguration.getComputerSymbolDefault()));
         players.add(new Human("Player1", TicTacToeConfiguration.getPlayer1SymbolDefault()));
         players.add(new Human("Player2", TicTacToeConfiguration.getPlayer2SymbolDefault()));
@@ -43,7 +43,7 @@ class TicTacToeGameTest {
             playground.updatePlayground(move);
         }
 
-        assertTrue(game.isGameWon(playground, move));
+        assertTrue(game.isGameWon(move));
     }
 
     @Test
@@ -56,7 +56,7 @@ class TicTacToeGameTest {
             playground.updatePlayground(move);
         }
 
-        assertTrue(game.isGameWon(playground, move));
+        assertTrue(game.isGameWon(move));
     }
 
     @Test
@@ -68,7 +68,7 @@ class TicTacToeGameTest {
             playground.updatePlayground(move);
         }
 
-        assertTrue(game.isGameWon(playground, move));
+        assertTrue(game.isGameWon(move));
     }
 
     @Test
@@ -84,6 +84,6 @@ class TicTacToeGameTest {
         }
 
         playground.printPlayground();
-        assertTrue(game.isGameDraw(playground, move));
+        assertTrue(game.isGameDraw(move));
     }
 }

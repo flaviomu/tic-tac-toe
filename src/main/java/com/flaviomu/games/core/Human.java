@@ -1,9 +1,9 @@
-package com.flaviomu.game.core;
+package com.flaviomu.games.core;
 
-import com.flaviomu.game.generic.PlayerImpl;
-import com.flaviomu.game.tictactoe.TicTacToeMove;
-import com.flaviomu.game.tictactoe.TicTacToePlayer;
-import com.flaviomu.game.tictactoe.TicTacToePlayground;
+import com.flaviomu.games.generic.PlayerImpl;
+import com.flaviomu.games.tictactoe.TicTacToeMove;
+import com.flaviomu.games.tictactoe.TicTacToePlayer;
+import com.flaviomu.games.tictactoe.TicTacToePlayground;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

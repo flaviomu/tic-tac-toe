@@ -1,4 +1,4 @@
-package com.flaviomu.game.generic;
+package com.flaviomu.games.generic;
 
 public abstract class PlayerImpl implements Player {
 
