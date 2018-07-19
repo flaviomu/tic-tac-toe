@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -67,10 +68,9 @@ public class TicTacToeGame extends Game {
         // set randomly the order of the players list
         definePlayersOrder();
 
-        Timer bonusTimer = new Timer();
+        ScheduledFuture bonusMoveTimerFuture = null;
         int nextPlayer = 0;
         while(true) {
-
             // Bonus move
             if (! bonusMoveTimerActive) {
                 System.out.println();
@@ -81,7 +81,7 @@ public class TicTacToeGame extends Game {
                 // Set and start bonus move timer runnable
                 Random bonusMoveDelayGenerator = new Random();
                 long bonusMoveDelay = ((long) bonusMoveDelayGenerator.nextInt(10) + 50);
-                bonusMoveScheduler.schedule( () -> {
+                bonusMoveTimerFuture = bonusMoveScheduler.schedule( () -> {
                         System.out.println();
                         log.debug("Activating the bonus move");
                         bonusMove = true;
@@ -125,22 +125,20 @@ public class TicTacToeGame extends Game {
             if (isGameWon(move)) {
                 // TODO cancel bonus move callable
                 if (bonusMoveTimerActive) {
-                    log.debug("Deactivating the bonus move timer");
-                    bonusTimer.cancel();
+                    if (bonusMoveTimerFuture.cancel(true))
+                        log.debug("Deactivating the bonus move timer");
                 }
 
-                //return "Game " + this.number + ": the winner is " + ((PlayerImpl) player).getName();
                 winner = player;
                 return this;
             }
             else if (isGameDraw(move)) {
                 // TODO cancel bonus move callable
                 if (bonusMoveTimerActive) {
-                    log.debug("Deactivating the bonus move timer");
-                    bonusTimer.cancel();
+                    if (bonusMoveTimerFuture.cancel(true))
+                        log.debug("Deactivating the bonus move timer");
                 }
 
-                //return "Game " + this.number + ": it ended with a draw.";
                 return this;
             }
         }

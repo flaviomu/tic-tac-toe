@@ -114,15 +114,15 @@ public class TicTacToeGameManager extends GameManager {
         TicTacToeGame ticTacToeGame = game;
         if (ticTacToeGame.getWinner() != null) {
             System.out.println();
-            System.out.println("\t************************************");
-            System.out.println("\tGame " + ticTacToeGame.getName() + ": the winner is " + ((PlayerImpl) ticTacToeGame.getWinner()).getName());
-            System.out.println("\t************************************");
+            System.out.println("\t***************************************");
+            System.out.println("\t Game " + ticTacToeGame.getName() + ": the winner is " + ((PlayerImpl) ticTacToeGame.getWinner()).getName());
+            System.out.println("\t***************************************");
         }
         else {
             System.out.println();
-            System.out.println("\t************************************");
-            System.out.println("\tGame " + ticTacToeGame.getName() + " ended with a draw");
-            System.out.println("\t************************************");
+            System.out.println("\t***************************************");
+            System.out.println("\t Game " + ticTacToeGame.getName() + " ended with a draw");
+            System.out.println("\t***************************************");
         }
     }
 }
