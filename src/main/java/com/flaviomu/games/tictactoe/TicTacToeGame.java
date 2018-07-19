@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class TicTacToeGame extends Game {
 
@@ -70,11 +71,6 @@ public class TicTacToeGame extends Game {
         // set randomly the order of the players list
         definePlayersOrder();
 
-        // Set and start bonus move callable
-        Random bonusMoveDelayGenerator = new Random();
-        long bonusMoveDelay = ((long) bonusMoveDelayGenerator.nextInt(10) + 10) * 1000;
-//        bonusMoveScheduler.schedule(new TicTacToeBonusMove(number, ticTacToePlayground, actualPlayingTimes), bonusMoveDelay, TimeUnit.SECONDS);
-
         Timer bonusTimer = new Timer();
         int nextPlayer = 0;
         while(true) {
@@ -85,14 +81,15 @@ public class TicTacToeGame extends Game {
                 log.debug("Activating the bonus move timer");
                 System.out.println();
                 bonusMoveTimerActive = true;
-                bonusTimer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
+
+                // Set and start bonus move timer runnable
+                Random bonusMoveDelayGenerator = new Random();
+                long bonusMoveDelay = ((long) bonusMoveDelayGenerator.nextInt(10) + 50);
+                bonusMoveScheduler.schedule( () -> {
                         System.out.println();
                         log.debug("Activating the bonus move");
                         bonusMove = true;
-                    }
-                }, 60000);//bonusMoveDelay);
+                }, bonusMoveDelay, TimeUnit.SECONDS);
             }
 
             Player player;
