@@ -9,4 +9,14 @@ public abstract class Game implements Callable<Game> {
 
     protected abstract boolean isGameDraw(Move move);
 
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

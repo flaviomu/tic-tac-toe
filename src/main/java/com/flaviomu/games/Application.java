@@ -36,9 +36,8 @@ public class Application {
                 System.out.println("\t" + prop + ": " + properties.getProperty(prop.toString())));
         System.out.println();
 
-        // Create generic manager and start the parallel games
-        int gamesNumber = 1;
-        GameManager ticTacToeGameManager = new TicTacToeGameManager(gamesNumber, properties);
-        ((TicTacToeGameManager)ticTacToeGameManager).startGames();
+        // Create and start the TicTacToeManager
+        GameManager ticTacToeGameManager = new TicTacToeGameManager(properties);
+        ((TicTacToeGameManager)ticTacToeGameManager).startGame();
     }
 }

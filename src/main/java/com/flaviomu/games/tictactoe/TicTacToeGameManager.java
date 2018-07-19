@@ -25,41 +25,35 @@ public class TicTacToeGameManager extends GameManager {
     private Properties gameProperties;
 
     private ExecutorService executorService;
-    private List<Callable<Game>> games;
+    private Game game;
 
 
     /**
      * Initialise the games creating playground and players
      *
-     * @param gamesNumber the number of TicTacToe games to be created
      * @param gameProperties the TicTacToe games properties
      */
-    public TicTacToeGameManager(int gamesNumber, Properties gameProperties) {
+    public TicTacToeGameManager(Properties gameProperties) {
         this.gameProperties = gameProperties;
-        executorService = Executors.newFixedThreadPool(gamesNumber);
-        games = new ArrayList<>();
+        executorService = Executors.newFixedThreadPool(1);
 
         // TODO
         // Create Application playground and players for each generic games
-        for (int gameNumber = 1; gameNumber <= gamesNumber; gameNumber++) {
-            int playgroundSize = Integer.parseInt(gameProperties.getProperty(TicTacToeConfiguration.getPlaygroundSizeKey()));
-            TicTacToePlayground ticTacToePlayground = new TicTacToePlayground(playgroundSize);
+        int playgroundSize = Integer.parseInt(gameProperties.getProperty(TicTacToeConfiguration.getPlaygroundSizeKey()));
+        TicTacToePlayground ticTacToePlayground = new TicTacToePlayground(playgroundSize);
 
-            Game game = createGame(gameNumber, ticTacToePlayground);
-            games.add(game);
+        game = createGame(ticTacToePlayground);
 
-            log.info("Starting Game " + gameNumber);
-            log.info("Game " + gameNumber + " -> TicTacToePlayground State:");
-            ticTacToePlayground.printPlayground();
-        }
-
+        log.info("Starting Game " + game.getName());
+        log.info("Game " + game.getName() + " -> Playground State:");
+        ticTacToePlayground.printPlayground();
     }
 
 
     /*
         Create and initialise a  TicTacToe games
      */
-    private Game createGame(int gameNumber, TicTacToePlayground ticTacToePlayground) {
+    private Game createGame(TicTacToePlayground ticTacToePlayground) {
         // Load Application configurations
 
         String computerSymbol = gameProperties.getProperty(TicTacToeConfiguration.getComputerSymbolKey());
@@ -71,52 +65,44 @@ public class TicTacToeGameManager extends GameManager {
         players.add(new Human("Player1", player1Symbol));
         players.add(new Human("Player2", player2Symbol));
 
-        return new TicTacToeGame(gameNumber, ticTacToePlayground, players);
+        game = new TicTacToeGame(ticTacToePlayground, players);
+        return game;
     }
 
 
     /**
-     * Start the games managed by this manager
+     * Start the game managed by this manager
      *
      */
-    public void startGames() {
+    public void startGame() {
+        // Start the games
+        Future<Game> winner = executorService.submit(game);
+
         try {
-            // Start the games
-            List<Future<Game>> winners = executorService.invokeAll(games);
+            winner.get();
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
 
-            winners.stream()
-                    .map(winner -> {
-                        try {
-                            return winner.get();
-                        } catch (Exception e) {
-                            throw new IllegalStateException(e);
-                        }
-                    })
-                    .forEach(game -> {
-                        printGameResult((TicTacToeGame) game);
+        printGameResult((TicTacToeGame) game);
 
-                        while (true) {
-                            Scanner scanner = new Scanner(System.in);
-                            System.out.print("\n\n\n\tWould you like to play again [y/N]? ");
-                            String yesNo = scanner.next();
-                            if (String.valueOf(yesNo.charAt(0)).equals("y")) {
-                                System.out.println();
-                                ((TicTacToeGame) game).resetGame();
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("\n\n\n\tWould you like to play again [y/N]? ");
+            String yesNo = scanner.next();
+            if (String.valueOf(yesNo.charAt(0)).equals("y")) {
+                System.out.println();
+                ((TicTacToeGame) game).resetGame();
 
-                                Future<Game> winner = executorService.submit(game);
-                                try {
-                                    printGameResult((TicTacToeGame) winner.get());
-                                } catch (InterruptedException | ExecutionException e) {
-                                    e.printStackTrace();
-                                }
-                            } else {
-                                System.exit(0);
-                            }
-                        }
-                    });
-        } catch (InterruptedException e) {
-            log.error("Play time is over: back to work!");
-            e.printStackTrace();
+                winner = executorService.submit(game);
+                try {
+                    printGameResult((TicTacToeGame) winner.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.exit(0);
+            }
         }
     }
 
@@ -129,13 +115,13 @@ public class TicTacToeGameManager extends GameManager {
         if (ticTacToeGame.getWinner() != null) {
             System.out.println();
             System.out.println("\t************************************");
-            System.out.println("\tGame " + ticTacToeGame.getNumber() + ": the winner is " + ((PlayerImpl) ticTacToeGame.getWinner()).getName());
+            System.out.println("\tGame " + ticTacToeGame.getName() + ": the winner is " + ((PlayerImpl) ticTacToeGame.getWinner()).getName());
             System.out.println("\t************************************");
         }
         else {
             System.out.println();
             System.out.println("\t************************************");
-            System.out.println("\tGame " + ticTacToeGame.getNumber() + " ended with a draw");
+            System.out.println("\tGame " + ticTacToeGame.getName() + " ended with a draw");
             System.out.println("\t************************************");
         }
     }

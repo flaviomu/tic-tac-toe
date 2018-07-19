@@ -30,7 +30,7 @@ class TicTacToeGameTest {
     @BeforeEach
     void setUp() {
         playground = new TicTacToePlayground(playgroundSize);
-        game = new TicTacToeGame(1, playground, players);
+        game = new TicTacToeGame(playground, players);
     }
 
     @Test

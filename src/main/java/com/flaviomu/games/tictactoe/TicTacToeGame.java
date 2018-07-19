@@ -14,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 
 public class TicTacToeGame extends Game {
 
+    private final String NAME = "TicTacToe";
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    private int number;
     private TicTacToePlayground ticTacToePlayground;
     private List<Player> players;
     private Map<Player, Long> actualPlayingTimes;
@@ -28,8 +28,8 @@ public class TicTacToeGame extends Game {
     private ScheduledExecutorService bonusMoveScheduler;
 
 
-    public TicTacToeGame(int number, TicTacToePlayground ticTacToePlayground, List<Player> players) {
-        this.number = number;
+    public TicTacToeGame(TicTacToePlayground ticTacToePlayground, List<Player> players) {
+        super.setName(NAME);
         this.ticTacToePlayground = ticTacToePlayground;
         this.players = players;
 
@@ -37,10 +37,6 @@ public class TicTacToeGame extends Game {
         this.actualPlayingTimes = new HashMap<>();
         for (Player p : players)
             this.actualPlayingTimes.put(p, (long) -1);
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     public Player getWinner() {
@@ -123,7 +119,7 @@ public class TicTacToeGame extends Game {
             log.debug(((PlayerImpl)player).getName() + " moved in " + (moveTime / 1000) + " seconds");
 
             //System.out.println("\n");
-            log.info("Game " + number + " -> TicTacToePlayground State:");
+            log.info("Game " + this.getName() + " -> Playground State:");
             ticTacToePlayground.printPlayground();
 
             if (isGameWon(move)) {
