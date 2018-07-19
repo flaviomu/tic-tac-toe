@@ -10,10 +10,11 @@ public class TicTacToeConfiguration {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    private static final String playgroundSizeKey = "playground-size";
-    private static final String computerSymbolKey = "computer-symbol";
-    private static final String player1SymbolKey = "player1-symbol";
-    private static final String player2SymbolKey = "player2-symbol";
+    private static final String ticTacToePrefixKey = "tictactoe.";
+    private static final String playgroundSizeKey = ticTacToePrefixKey + "playground-size";
+    private static final String computerSymbolKey = ticTacToePrefixKey + "computer-symbol";
+    private static final String player1SymbolKey = ticTacToePrefixKey + "player1-symbol";
+    private static final String player2SymbolKey = ticTacToePrefixKey + "player2-symbol";
 
     private static final Integer PLAYGROUND_SIZE_DEFAULT = 3;
     private static final String COMPUTER_SYMBOL_DEFAULT = "C";

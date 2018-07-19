@@ -18,9 +18,8 @@ import java.util.Properties;
  *
  */
 public class Application {
-
-    // TODO: rename file games.etc1.etc2.=value
-    private static final String PROPERTIES_FILE_NAME_DEFAULT = "tictactoe.properties";
+    
+    private static final String PROPERTIES_FILE_NAME_DEFAULT = "games.properties";
     private static final String APP_NAME = Application.class.getSimpleName();
     private static final Logger log = LoggerFactory.getLogger(APP_NAME);
 
