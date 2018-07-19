@@ -1,5 +1,6 @@
 package com.flaviomu.games;
 
+import com.flaviomu.games.config.GamesConfiguration;
 import com.flaviomu.games.config.TicTacToeConfiguration;
 import com.flaviomu.games.generic.GameManager;
 import com.flaviomu.games.tictactoe.TicTacToeGameManager;
@@ -28,7 +29,13 @@ public class Application {
         String propertiesFileName = PROPERTIES_FILE_NAME_DEFAULT;
         if (args.length == 1)
             propertiesFileName = args[0];
-        TicTacToeConfiguration configuration = new TicTacToeConfiguration(propertiesFileName);
+
+        GamesConfiguration allProperties = new GamesConfiguration(propertiesFileName);
+
+        // TODO Add games menu
+
+        // #### TicTacToe ####
+        TicTacToeConfiguration configuration = new TicTacToeConfiguration(allProperties);
 
         Properties properties = configuration.getProperties();
         log.debug("Starting " + APP_NAME + " with following properties: ");
@@ -39,5 +46,6 @@ public class Application {
         // Create and start the TicTacToeManager
         GameManager ticTacToeGameManager = new TicTacToeGameManager(properties);
         ((TicTacToeGameManager)ticTacToeGameManager).startGame();
+        // ###################
     }
 }

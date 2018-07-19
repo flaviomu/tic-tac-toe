@@ -13,16 +13,20 @@ class TicTacToeConfigurationTest {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
+    private GamesConfiguration gamesConfiguration;
     private TicTacToeConfiguration ticTacToeConfiguration;
 
     @Test
     void testLoadDefaultProperties() {
         log.info("Testing loading of DEFAULT properties");
 
+
         Executable codeUnderTest = () ->
-                ticTacToeConfiguration = new TicTacToeConfiguration("properties-file-not-existing.txt");
+                gamesConfiguration = new GamesConfiguration("properties-file-not-existing.txt");
 
         assertDoesNotThrow(codeUnderTest);
+
+        ticTacToeConfiguration = new TicTacToeConfiguration(gamesConfiguration);
 
         assertEquals(TicTacToeConfiguration.getPlaygroundSizeDefault().toString(),
                 ticTacToeConfiguration.getProperties().getProperty(TicTacToeConfiguration.getPlaygroundSizeKey()));

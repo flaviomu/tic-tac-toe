@@ -17,12 +17,11 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 
-// TODO Generalise the role of TicTacToeGameManager and/or create a TicTacToeManager
 public class TicTacToeGameManager extends GameManager {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    private Properties gameProperties;
+    private Properties gamesProperties;
 
     private ExecutorService executorService;
     private Game game;
@@ -31,15 +30,15 @@ public class TicTacToeGameManager extends GameManager {
     /**
      * Initialise the games creating playground and players
      *
-     * @param gameProperties the TicTacToe games properties
+     * @param gamesProperties the TicTacToe games properties
      */
-    public TicTacToeGameManager(Properties gameProperties) {
-        this.gameProperties = gameProperties;
+    public TicTacToeGameManager(Properties gamesProperties) {
+        this.gamesProperties = gamesProperties;
         executorService = Executors.newFixedThreadPool(1);
 
         // TODO
         // Create Application playground and players for each generic games
-        int playgroundSize = Integer.parseInt(gameProperties.getProperty(TicTacToeConfiguration.getPlaygroundSizeKey()));
+        int playgroundSize = Integer.parseInt(gamesProperties.getProperty(TicTacToeConfiguration.getPlaygroundSizeKey()));
         TicTacToePlayground ticTacToePlayground = new TicTacToePlayground(playgroundSize);
 
         game = createGame(ticTacToePlayground);
@@ -56,9 +55,9 @@ public class TicTacToeGameManager extends GameManager {
     private Game createGame(TicTacToePlayground ticTacToePlayground) {
         // Load Application configurations
 
-        String computerSymbol = gameProperties.getProperty(TicTacToeConfiguration.getComputerSymbolKey());
-        String player1Symbol = gameProperties.getProperty(TicTacToeConfiguration.getPlayer1SymbolKey());
-        String player2Symbol = gameProperties.getProperty(TicTacToeConfiguration.getPlayer2SymbolKey());
+        String computerSymbol = gamesProperties.getProperty(TicTacToeConfiguration.getComputerSymbolKey());
+        String player1Symbol = gamesProperties.getProperty(TicTacToeConfiguration.getPlayer1SymbolKey());
+        String player2Symbol = gamesProperties.getProperty(TicTacToeConfiguration.getPlayer2SymbolKey());
 
         List<Player> players = new ArrayList<>();
         players.add(new Computer("Computer", computerSymbol));

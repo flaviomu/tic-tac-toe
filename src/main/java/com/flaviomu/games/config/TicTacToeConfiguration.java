@@ -26,9 +26,32 @@ public class TicTacToeConfiguration {
     /**
      * Builds the TicTacToe games configurations
      *
-     * @param propertiesFileName the
+     * @param configurations the general games configurations
      */
-    public TicTacToeConfiguration(String propertiesFileName) {
+    public TicTacToeConfiguration(GamesConfiguration configurations) {
+        properties = new Properties();
+        if (configurations.getProperties().containsKey(playgroundSizeKey))
+            properties.setProperty(getPlaygroundSizeKey(), configurations.getProperties().getProperty(playgroundSizeKey));
+        else
+            properties.setProperty(playgroundSizeKey, PLAYGROUND_SIZE_DEFAULT.toString());
+
+        if (configurations.getProperties().containsKey(computerSymbolKey))
+            properties.setProperty(computerSymbolKey, configurations.getProperties().getProperty(computerSymbolKey));
+        else
+            properties.setProperty(computerSymbolKey, COMPUTER_SYMBOL_DEFAULT);
+
+        if (configurations.getProperties().containsKey(player1SymbolKey))
+            properties.setProperty(player1SymbolKey, configurations.getProperties().getProperty(player1SymbolKey));
+        else
+            properties.setProperty(player1SymbolKey, PLAYER1_SYMBOL_DEFAULT);
+
+        if (configurations.getProperties().containsKey(player2SymbolKey))
+            properties.setProperty(player2SymbolKey, configurations.getProperties().getProperty(player2SymbolKey));
+        else
+            properties.setProperty(player2SymbolKey, PLAYER2_SYMBOL_DEFAULT);
+    }
+
+    /*public TicTacToeConfiguration(String propertiesFileName) {
         try {
             properties = new Properties();
             log.debug("Loading properties file: " + propertiesFileName);
@@ -44,7 +67,8 @@ public class TicTacToeConfiguration {
             log.warn("Loading DEFAULT properties.");
             loadDefaultProperties();
         }
-    }
+    }*/
+
 
     public Properties getProperties() {
         return properties;
@@ -82,15 +106,14 @@ public class TicTacToeConfiguration {
         return PLAYER2_SYMBOL_DEFAULT;
     }
 
+
     /*
         Load the default properties values
-     */
+     *//*
     private void loadDefaultProperties() {
         properties.setProperty(playgroundSizeKey, PLAYGROUND_SIZE_DEFAULT.toString());
         properties.setProperty(computerSymbolKey, COMPUTER_SYMBOL_DEFAULT);
         properties.setProperty(player1SymbolKey, PLAYER1_SYMBOL_DEFAULT);
         properties.setProperty(player2SymbolKey, PLAYER2_SYMBOL_DEFAULT);
-    }
-
-
+    }*/
 }
