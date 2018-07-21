@@ -13,6 +13,10 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Provides an implementation of the TicTacToe game
+ *
+ */
 public class TicTacToeGame extends Game {
 
     private final String NAME = "TicTacToe";
@@ -28,7 +32,13 @@ public class TicTacToeGame extends Game {
 
     private ScheduledExecutorService bonusMoveScheduler;
 
-
+    /**
+     * Creates a new TicTacToe game
+     *
+     * @param ticTacToePlayground the @{@link TicTacToePlayground} playground associated to the game
+     * @param players the list of @{@link Player} players who are playing the game
+     *
+     */
     public TicTacToeGame(TicTacToePlayground ticTacToePlayground, List<Player> players) {
         super.setName(NAME);
         this.ticTacToePlayground = ticTacToePlayground;
@@ -40,13 +50,14 @@ public class TicTacToeGame extends Game {
             this.actualPlayingTimes.put(p, (long) -1);
     }
 
+
     public Player getWinner() {
         return winner;
     }
 
 
     /**
-     * Reset the games bringing it to a clean state
+     * Resets the TicTacToe game bringing it to a clean state
      *
      */
     public void resetGame() {
@@ -59,13 +70,13 @@ public class TicTacToeGame extends Game {
     }
 
     /**
-     * Define the TicTacToe games logic
+     * Defines the TicTacToe game logic
      *
      * @return the current Game when it has finished with a victory or with a draw
      */
     @Override
     public Game call() {
-        // set randomly the order of the players list
+        // Sets randomly the order of the players list
         definePlayersOrder();
 
         ScheduledFuture bonusMoveTimerFuture = null;
@@ -78,7 +89,7 @@ public class TicTacToeGame extends Game {
                 System.out.println();
                 bonusMoveTimerActive = true;
 
-                // Set and start bonus move timer runnable
+                // Sets and start bonus move timer runnable
                 Random bonusMoveDelayGenerator = new Random();
                 long bonusMoveDelay = ((long) bonusMoveDelayGenerator.nextInt(10) + 50);
                 bonusMoveTimerFuture = bonusMoveScheduler.schedule( () -> {
@@ -103,7 +114,7 @@ public class TicTacToeGame extends Game {
                 log.info("Now " + ((PlayerImpl)player).getName() + " plays");
             }
 
-            // Execute the move recording the time used
+            // Executes the move recording the time used
             long startTime = System.currentTimeMillis();
             TicTacToeMove move = null;
             try {
@@ -146,7 +157,7 @@ public class TicTacToeGame extends Game {
 
 
     /**
-     * Reorder the players list randomly
+     * Reorders the @{@link TicTacToePlayer} players list defining the playing turns randomly
      *
      */
     private void definePlayersOrder() {
@@ -166,7 +177,7 @@ public class TicTacToeGame extends Game {
 
 
     /**
-     * Determine the player who has made all its move in the shortest actual time
+     * Determines the player who has made all its move in the shortest actual time
      *
      * @param actualPlayingTimes the actual playing time of the players
      * @return the fastest player
@@ -187,7 +198,7 @@ public class TicTacToeGame extends Game {
 
 
     /**
-     * Determine if after a move the games finishes with a victory
+     * Determines if after a move the games finishes with a victory
      *
      * @param move the move that might determine a victory
      * @return True if the move determine a victory, False otherwise
@@ -199,7 +210,7 @@ public class TicTacToeGame extends Game {
 
 
     /**
-     * Determine if after a move the games finishes with a draw
+     * Determines if after a move the games finishes with a draw
      *
      * @param move the move that might determine a draw
      * @return True if the move determine a draw, False otherwise

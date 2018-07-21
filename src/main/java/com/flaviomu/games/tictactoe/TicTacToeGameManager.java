@@ -1,6 +1,5 @@
 package com.flaviomu.games.tictactoe;
 
-import com.flaviomu.games.config.TicTacToeConfiguration;
 import com.flaviomu.games.core.Computer;
 import com.flaviomu.games.core.Human;
 import com.flaviomu.games.generic.Game;
@@ -17,6 +16,10 @@ import java.util.Scanner;
 import java.util.concurrent.*;
 
 
+/**
+ * Provides an implementation of the TicTacToe game manager
+ *
+ */
 public class TicTacToeGameManager extends GameManager {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -28,7 +31,7 @@ public class TicTacToeGameManager extends GameManager {
 
 
     /**
-     * Initialise the games creating playground and players
+     * Creates a new TicTacToe manager creating the game, the playground and the players
      *
      * @param gamesProperties the TicTacToe games properties
      */
@@ -36,8 +39,6 @@ public class TicTacToeGameManager extends GameManager {
         this.gamesProperties = gamesProperties;
         executorService = Executors.newFixedThreadPool(1);
 
-        // TODO
-        // Create Application playground and players for each generic games
         int playgroundSize = Integer.parseInt(gamesProperties.getProperty(TicTacToeConfiguration.getPlaygroundSizeKey()));
         TicTacToePlayground ticTacToePlayground = new TicTacToePlayground(playgroundSize);
 
@@ -50,11 +51,10 @@ public class TicTacToeGameManager extends GameManager {
 
 
     /*
-        Create and initialise a  TicTacToe games
+        Creates and initialise a  TicTacToe games
      */
     private Game createGame(TicTacToePlayground ticTacToePlayground) {
-        // Load Application configurations
-
+        // Loads Application configurations
         String computerSymbol = gamesProperties.getProperty(TicTacToeConfiguration.getComputerSymbolKey());
         String player1Symbol = gamesProperties.getProperty(TicTacToeConfiguration.getPlayer1SymbolKey());
         String player2Symbol = gamesProperties.getProperty(TicTacToeConfiguration.getPlayer2SymbolKey());
@@ -70,11 +70,11 @@ public class TicTacToeGameManager extends GameManager {
 
 
     /**
-     * Start the game managed by this manager
+     * Starts the game managed by this manager
      *
      */
     public void startGame() {
-        // Start the games
+        // Starts the games
         Future<Game> winner = executorService.submit(game);
 
         try {
@@ -107,7 +107,7 @@ public class TicTacToeGameManager extends GameManager {
 
 
     /*
-        Print the result of a games assuming it finished with a victory or a draw
+        Prints the result of a games assuming it finished with a victory or a draw
      */
     private void printGameResult(TicTacToeGame game) {
         TicTacToeGame ticTacToeGame = game;

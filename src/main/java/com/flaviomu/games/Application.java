@@ -1,7 +1,7 @@
 package com.flaviomu.games;
 
 import com.flaviomu.games.config.GamesConfiguration;
-import com.flaviomu.games.config.TicTacToeConfiguration;
+import com.flaviomu.games.tictactoe.TicTacToeConfiguration;
 import com.flaviomu.games.generic.GameManager;
 import com.flaviomu.games.tictactoe.TicTacToeGameManager;
 import org.slf4j.Logger;

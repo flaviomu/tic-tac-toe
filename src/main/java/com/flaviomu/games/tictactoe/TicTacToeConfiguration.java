@@ -1,11 +1,16 @@
-package com.flaviomu.games.config;
+package com.flaviomu.games.tictactoe;
 
+import com.flaviomu.games.config.GamesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * Contains the TicTacToe configurations
+ *
+ */
 public class TicTacToeConfiguration {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -24,7 +29,7 @@ public class TicTacToeConfiguration {
     private Properties properties;
 
     /**
-     * Builds the TicTacToe games configurations
+     * Creates the TicTacToe games configurations
      *
      * @param configurations the general games configurations
      */
@@ -108,7 +113,7 @@ public class TicTacToeConfiguration {
 
 
     /*
-        Load the default properties values
+        Loads the default properties values
      *//*
     private void loadDefaultProperties() {
         properties.setProperty(playgroundSizeKey, PLAYGROUND_SIZE_DEFAULT.toString());

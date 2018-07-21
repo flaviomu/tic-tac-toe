@@ -2,11 +2,26 @@ package com.flaviomu.games.generic;
 
 import java.util.concurrent.Callable;
 
-
+/**
+ * Provides a general implementation for the various games
+ *
+ */
 public abstract class Game implements Callable<Game> {
 
+    /**
+     * Determines if the game ended with a victory or not
+     *
+     * @param move the last @{@link Move} executed
+     * @return true if the game ended with a victory, false otherwise
+     */
     protected abstract boolean isGameWon(Move move);
 
+    /**
+     * Determines if the game ended with a draw or not
+     *
+     * @param move the last @{@link Move} executed
+     * @return true if the game ended with a draw, false otherwise
+     */
     protected abstract boolean isGameDraw(Move move);
 
     private String name;

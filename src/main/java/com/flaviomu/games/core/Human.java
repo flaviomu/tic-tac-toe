@@ -9,26 +9,39 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
+/**
+ * Defines a human kind of @{@link TicTacToePlayer} player.
+ * It extends @{@link PlayerImpl}.
+ *
+ */
 public class Human extends PlayerImpl implements TicTacToePlayer {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
     private static final Scanner scanner = new Scanner(System.in);
 
+    /**
+     * Creates a new human player.
+     *
+     * @param name the name of the player
+     * @param symbol the symbol associated to the player
+     */
     public Human(String name, String symbol) {
         super(name, symbol);
     }
 
+    /**
+     * Defines the logic for a @{@link TicTacToeMove} move executed by the @{@link Human} player
+     *
+     * @param ticTacToePlayground the @{@link TicTacToePlayground} where to execute the @{@link TicTacToeMove} move
+     * @return the @TicTacToeMove executed by the @{@link Human} player
+     * @throws @{@link InterruptedException}
+     */
     @Override
     public TicTacToeMove doTicTacToeMove(TicTacToePlayground ticTacToePlayground) {
-        TicTacToeMove move = new TicTacToeMove(-1, -1, this.getSymbol());
+        TicTacToeMove move;
 
         while(true) {
-            System.out.print("\tInsert row index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
-            int row = scanner.nextInt();
-            System.out.print("\tInsert column index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
-            int column = scanner.nextInt();
-
-            move = new TicTacToeMove(row, column, this.getSymbol());
+            move = getTicTacToeMove(ticTacToePlayground);
 
             if (ticTacToePlayground.isValidMove(move))
                 break;
@@ -36,18 +49,21 @@ public class Human extends PlayerImpl implements TicTacToePlayer {
                 System.out.println("\n\tMove not valid. Please, insert a new move.\n");
         }
 
-        // execute the move
+        // Executes the move
         ticTacToePlayground.updatePlayground(move);
 
         return move;
     }
 
-//    private TicTacToeMove getTicTacToeMove() {
-//        System.out.print("\tInsert row index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
-//        int row = scanner.nextInt();
-//        System.out.print("\tInsert column index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
-//        int column = scanner.nextInt();
-//
-//        return new TicTacToeMove(row, column, this.getSymbol());
-//    }
+    /*
+        Reads the human move from the standard input
+     */
+    private TicTacToeMove getTicTacToeMove(TicTacToePlayground ticTacToePlayground) {
+        System.out.print("\tInsert row index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
+        int row = scanner.nextInt();
+        System.out.print("\tInsert column index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
+        int column = scanner.nextInt();
+
+        return new TicTacToeMove(row, column, this.getSymbol());
+    }
 }

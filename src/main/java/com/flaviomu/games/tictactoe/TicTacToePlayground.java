@@ -5,6 +5,10 @@ import com.flaviomu.games.generic.Playground;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
+/**
+ * Provides an implementation of the TicTacToe playground
+ */
 public class TicTacToePlayground extends Playground {
 
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -14,7 +18,11 @@ public class TicTacToePlayground extends Playground {
     private int playgroundArraySize;
     private String[] playground;
 
-
+    /**
+     * Creates a new TicTacToe playground
+     *
+     * @param playgroundSize the playground size
+     */
     public TicTacToePlayground(int playgroundSize) {
         this.playgroundSize = playgroundSize;
         playgroundArraySize = playgroundSize * playgroundSize;
@@ -29,7 +37,7 @@ public class TicTacToePlayground extends Playground {
     }
 
     /**
-     * Verify that the move is valid (the cell is within the boundaries of the playground and is free)
+     * Verifies that the move is valid (the cell is within the boundaries of the playground and is free)
      *
      * @param move the move to be validated
      * @return True if the move is valid, False otherwise
@@ -51,7 +59,7 @@ public class TicTacToePlayground extends Playground {
     }
 
     /*
-        Return the cell index to which a Move is related
+        Returns the cell index to which a Move is related
      */
     private int getCellIndexOfMove(Move move) {
         int row = ((TicTacToeMove) move).getRow();
@@ -61,7 +69,7 @@ public class TicTacToePlayground extends Playground {
     }
 
     /*
-        Return the index of the array representing the playground starting from the row and column indexes of the
+        Returns the index of the array representing the playground starting from the row and column indexes of the
         playground matrix
      */
     private int getCellIndex(int row, int column) {
@@ -70,7 +78,7 @@ public class TicTacToePlayground extends Playground {
     }
 
     /**
-     * Get the symbol existing in the cell index defined by the row and column indexes of the playground matrix
+     * Gets the symbol existing in the cell index defined by the row and column indexes of the playground matrix
      *
      * @param row the row index of the playground matrix
      * @param column the column index of the playground matrix
@@ -83,7 +91,7 @@ public class TicTacToePlayground extends Playground {
 
 
     /**
-     * Verify if there is still at least one free cell
+     * Verifies if there is still at least one free cell
      *
      * @return True if there is one free cell, False otherwise
      */
@@ -98,7 +106,7 @@ public class TicTacToePlayground extends Playground {
 
 
     /**
-     * Update the playground matrix executing the passed @TicTacToeMove move
+     * Updates the playground matrix executing the passed @TicTacToeMove move
      *
      * @param move the move to be executed
      * @throws IllegalArgumentException if the move passed is not valid
@@ -116,7 +124,7 @@ public class TicTacToePlayground extends Playground {
 
 
     /**
-     * Print the playground
+     * Prints the playground
      *
      */
     @Override
@@ -129,7 +137,9 @@ public class TicTacToePlayground extends Playground {
         System.out.println("\n");
     }
 
-
+    /**
+     * Cleans the state of the playground bringing it to an initial state
+     */
     public void cleanPlayground() {
         for (int playgroundCellIndex = 0; playgroundCellIndex < playgroundArraySize; playgroundCellIndex++)
             playground[playgroundCellIndex] = FREE_CELL_SYMBOL;
@@ -138,17 +148,17 @@ public class TicTacToePlayground extends Playground {
 
 
     /**
-     * Check if the current state of the TicTacToe playground represents a victory
+     * Checks if the current state of the playground represents a victory
      *
-     * @param move The last move executed
-     * @return true if the last move brought to a win, false otherwise
+     * @param move the last @{@link Move} move executed
+     * @return true if the last move caused a victory, false otherwise
      */
     public boolean isGameWon(Move move) {
         int row = ((TicTacToeMove) move).getRow();
         int column = ((TicTacToeMove) move).getColumn();
         String symbol = ((TicTacToeMove) move).getSymbol();
 
-        // Check row
+        // Checks row
         boolean win = true;
         for (int c = 1; c <= this.getPlaygroundSize(); c++) {
             if (! this.getSymbolInCell(row, c).equals(symbol)) {
@@ -158,7 +168,7 @@ public class TicTacToePlayground extends Playground {
         }
         if (win) return win;
 
-        // Check column
+        // Checks column
         win = true;
         for (int r = 1; r <= this.getPlaygroundSize(); r++) {
             if (! this.getSymbolInCell(r, column).equals(symbol)) {
@@ -168,7 +178,7 @@ public class TicTacToePlayground extends Playground {
         }
         if (win) return win;
 
-        // Check diagonal
+        // Checks diagonal
         if (isMoveOnDiagonal(move)) {
             int halfPlaygroundSize = (int) Math.ceil((double) this.getPlaygroundSize() / 2);
             if (column < halfPlaygroundSize)
@@ -192,7 +202,7 @@ public class TicTacToePlayground extends Playground {
 
 
     /*
-        Verify if the move is in a diagonal of the playground
+        Verifies if the move is in a diagonal of the playground
      */
     private boolean isMoveOnDiagonal(Move move) {
         int row = ((TicTacToeMove) move).getRow();
@@ -211,7 +221,7 @@ public class TicTacToePlayground extends Playground {
     }
 
     /*
-        Verify if the move is in the diagonal which goes from cell [1:1] to cell [playgroundSize:playgroundSize]
+        Verifies if the move is in the diagonal which goes from cell [1:1] to cell [playgroundSize:playgroundSize]
      */
     private boolean checkDownDiagonal(Move move) {
         int playgroundSize = this.getPlaygroundSize();
@@ -226,7 +236,7 @@ public class TicTacToePlayground extends Playground {
     }
 
     /*
-        Verify if the move is in the diagonal which goes from cell [1:playgroundSize] to cell [playgroundSize:1]
+        Verifies if the move is in the diagonal which goes from cell [1:playgroundSize] to cell [playgroundSize:1]
      */
     private boolean checkUpDiagonal(Move move) {
         int playgroundSize = this.getPlaygroundSize();
@@ -242,10 +252,10 @@ public class TicTacToePlayground extends Playground {
 
 
     /**
-     * Check if the current state of the TicTacToe playground represents a draw
+     * Checks if the current state of the playground represents a draw
      *
-     * @param move The last move executed
-     * @return true if the last move brought to a win, false otherwise
+     * @param move the last @{@link Move} move executed
+     * @return true if the last move caused a draw, false otherwise
      */
     public boolean isGameDraw(Move move) {
         // The games is considered to finish with a draw only when there is no win and no free cells anymore

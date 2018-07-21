@@ -1,6 +1,5 @@
 package com.flaviomu.games.tictactoe;
 
-import com.flaviomu.games.config.TicTacToeConfiguration;
 import com.flaviomu.games.core.Computer;
 import com.flaviomu.games.core.Human;
 import com.flaviomu.games.generic.Player;
@@ -11,6 +10,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Defines the test for the @{@link TicTacToeGame} class
+ *
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TicTacToeGameTest {
 
@@ -19,6 +23,10 @@ class TicTacToeGameTest {
     private TicTacToeGame game;
     private List<Player> players;
 
+    /**
+     * Sets up the list of the @{@link TicTacToePlayer} players
+     *
+     */
     @BeforeAll
     void setUpAll() {
         players = new ArrayList<>();
@@ -27,12 +35,21 @@ class TicTacToeGameTest {
         players.add(new Human("Player2", TicTacToeConfiguration.getPlayer2SymbolDefault()));
     }
 
+
+    /**
+     * Sets up the @{@link TicTacToePlayground} playground and create the @{@link TicTacToeGame} game
+     *
+     */
     @BeforeEach
     void setUp() {
         playground = new TicTacToePlayground(playgroundSize);
         game = new TicTacToeGame(playground, players);
     }
 
+
+    /**
+     * Tests the winning of a @{@link TicTacToeGame} game with a "row-winning" playground state
+     */
     @Test
     void isGameWonOnRow() {
         int row = 1;
@@ -46,6 +63,9 @@ class TicTacToeGameTest {
         assertTrue(game.isGameWon(move));
     }
 
+    /**
+     * Tests the winning of a @{@link TicTacToeGame} game with a "column-winning" playground state
+     */
     @Test
     void isGameWonOnColumn() {
         int column = 1;
@@ -59,6 +79,9 @@ class TicTacToeGameTest {
         assertTrue(game.isGameWon(move));
     }
 
+    /**
+     * Tests the winning of a @{@link TicTacToeGame} game with a "diagonal-winning" playground state
+     */
     @Test
     void isGameWonOnDiagonal() {
         TicTacToeMove move = null;
@@ -71,6 +94,9 @@ class TicTacToeGameTest {
         assertTrue(game.isGameWon(move));
     }
 
+    /**
+     * Tests the draw of a @{@link TicTacToeGame} game
+     */
     @Test
     void isGameDraw() {
         TicTacToeMove move = null;

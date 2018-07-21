@@ -1,23 +1,33 @@
 package com.flaviomu.games.tictactoe;
 
-import com.flaviomu.games.config.TicTacToeConfiguration;
 import org.junit.jupiter.api.*;
-
 import java.util.function.Consumer;
-
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * Defines the test for the @{@link TicTacToePlayground} class
+ *
+ */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TicTacToePlaygroundTest {
 
     private int playgroundSize = TicTacToeConfiguration.getPlaygroundSizeDefault();
     private TicTacToePlayground playground;
 
+    /**
+     * Sets up the @{@link TicTacToePlayground} playground
+     *
+     */
     @BeforeEach
     void setUp() {
         playground = new TicTacToePlayground(playgroundSize);
     }
 
+
+    /**
+     * Tests the execution of a valid @{@link TicTacToeMove} move
+     */
     @Test
     void testValidMove() {
         int row = playgroundSize - 1;
@@ -28,8 +38,12 @@ class TicTacToePlaygroundTest {
         assertTrue(playground.isValidMove(move));
     }
 
+
+    /**
+     * Tests the execution of a not valid @{@link TicTacToeMove} move
+     */
     @Test
-    void testInvalidRowForMove() {
+    void testNotValidRowForMove() {
         int row = -1;
         int column = playgroundSize - 1;
         String symbol = "ST";
@@ -38,8 +52,12 @@ class TicTacToePlaygroundTest {
         assertFalse(playground.isValidMove(move));
     }
 
+
+    /**
+     * Tests the execution of a not valid @{@link TicTacToeMove} move
+     */
     @Test
-    void testInvalidColumnsForMove() {
+    void testNotValidColumnsForMove() {
         int row = playgroundSize - 1;
         int column = -1;
         String symbol = "ST";
@@ -48,6 +66,10 @@ class TicTacToePlaygroundTest {
         assertFalse(playground.isValidMove(move));
     }
 
+
+    /**
+     * Tests the execution of a not valid @{@link TicTacToeMove} move
+     */
     @Test
     void testNotFreeCellForMove() {
         int row = 1;
@@ -67,6 +89,10 @@ class TicTacToePlaygroundTest {
         assertThrows(IllegalArgumentException.class, () -> consumer.accept(move));
     }
 
+
+    /**
+     * Tests the possibility to execute a new valid @{@link TicTacToeMove} move
+     */
     @Test
     void testIsAnyNewMovePossible() {
         for (int row = 0; row < playground.getPlaygroundSize(); row++) {
@@ -81,6 +107,9 @@ class TicTacToePlaygroundTest {
     }
 
 
+    /**
+     * Tests the update of the @{@link TicTacToePlayground} playground with a new valid @{@link TicTacToeMove} move
+     */
     @Test
     void testUpdatePlayground() {
         int row = 1;
