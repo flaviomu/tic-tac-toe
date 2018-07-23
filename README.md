@@ -17,3 +17,10 @@ Build the project with:
 And, from the main directory, execute:
 
 `` java jar build/libs/tic-tac-toe-all-1.0.jar [ src/main/resources/games.properties ]``
+
+In case no configuration file is passed, the DEFAULT values are used:
+
+    - Playground size: 3
+    - Computer symbol: C
+    - Player 1 symbol: 1
+    - Player 2 symbol: 2
