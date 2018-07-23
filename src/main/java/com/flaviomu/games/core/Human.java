@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 /**
  * Defines a human kind of @{@link TicTacToePlayer} player.
@@ -59,10 +60,11 @@ public class Human extends PlayerImpl implements TicTacToePlayer {
         Reads the human move from the standard input
      */
     private TicTacToeMove getTicTacToeMove(TicTacToePlayground ticTacToePlayground) {
-        System.out.print("\tInsert row index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
-        int row = scanner.nextInt();
-        System.out.print("\tInsert column index (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + "): ");
-        int column = scanner.nextInt();
+        System.out.print("\tInsert row and column indexes separated by a comma (valid values are in range: 1-" + ticTacToePlayground.getPlaygroundSize() + ") (e.g. row,column): ");
+        String input = scanner.nextLine();
+        String[] indexes = input.split(",");
+        int row = Integer.parseInt(indexes[0].trim());
+        int column = Integer.parseInt(indexes[1].trim());
 
         return new TicTacToeMove(row, column, this.getSymbol());
     }
