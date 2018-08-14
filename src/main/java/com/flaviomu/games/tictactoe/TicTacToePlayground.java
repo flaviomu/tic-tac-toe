@@ -153,7 +153,7 @@ public class TicTacToePlayground extends Playground {
      * @param move the last @{@link Move} move executed
      * @return true if the last move caused a victory, false otherwise
      */
-    public boolean isGameWon(Move move) {
+    public boolean isGameWon(Move move, GameMode gameMode) {
         int row = ((TicTacToeMove) move).getRow();
         int column = ((TicTacToeMove) move).getColumn();
         String symbol = ((TicTacToeMove) move).getSymbol();
@@ -178,6 +178,13 @@ public class TicTacToePlayground extends Playground {
         }
         if (win) return win;
 
+        // Checks corners
+        win = false;
+        if (isMoveOnCorner(move))
+            if (gameMode.equals(GameMode.EXTENDED))
+                win = checkCorners(move);
+        if (win) return win;
+
         // Checks diagonal
         if (isMoveOnDiagonal(move)) {
             int halfPlaygroundSize = (int) Math.ceil((double) this.getPlaygroundSize() / 2);
@@ -199,7 +206,6 @@ public class TicTacToePlayground extends Playground {
 
         return false;
     }
-
 
     /*
         Verifies if the move is in a diagonal of the playground
@@ -250,6 +256,55 @@ public class TicTacToePlayground extends Playground {
         return true;
     }
 
+
+    private boolean isMoveOnCorner(Move move) {
+        int row = ((TicTacToeMove) move).getRow();
+        int column = ((TicTacToeMove) move).getColumn();
+        int playgroundSize = this.getPlaygroundSize();
+
+        return checkIndexForCorner(row,playgroundSize) && checkIndexForCorner(column, playgroundSize);
+    }
+
+
+    private boolean checkIndexForCorner(int index, int playgroundSize) {
+        if ( index == 1 || index == playgroundSize )
+            return true;
+
+        return false;
+    }
+
+
+    private boolean checkCorners(Move move) {
+        String symbol = ((TicTacToeMove) move).getSymbol();
+
+        int i = 0;
+
+        String tmpSymbol = playground[i];
+        if (checkSymbols(symbol, tmpSymbol))
+            return false;
+
+        i = playgroundSize - 1;
+        tmpSymbol = playground[i];
+        if (checkSymbols(symbol, tmpSymbol))
+            return false;
+
+        i = playgroundArraySize - playgroundSize;
+        tmpSymbol = playground[i];
+        if (checkSymbols(symbol, tmpSymbol))
+            return false;
+
+        i = playgroundArraySize - 1;
+        tmpSymbol = playground[i];
+        if (checkSymbols(symbol, tmpSymbol))
+            return false;
+
+        return true;
+    }
+
+
+    private boolean checkSymbols(String symbol1, String symbol2) {
+        return (! symbol1.equals(symbol2) || symbol2.equals(FREE_CELL_SYMBOL));
+    }
 
     /**
      * Checks if the current state of the playground represents a draw

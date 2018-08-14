@@ -1,5 +1,7 @@
 package com.flaviomu.games.generic;
 
+import com.flaviomu.games.tictactoe.GameMode;
+
 import java.util.concurrent.Callable;
 
 /**
@@ -14,7 +16,7 @@ public abstract class Game implements Callable<Game> {
      * @param move the last @{@link Move} executed
      * @return true if the game ended with a victory, false otherwise
      */
-    protected abstract boolean isGameWon(Move move);
+    protected abstract boolean isGameWon(Move move, GameMode gameMode);
 
     /**
      * Determines if the game ended with a draw or not

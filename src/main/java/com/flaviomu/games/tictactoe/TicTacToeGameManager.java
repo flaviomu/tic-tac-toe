@@ -58,13 +58,14 @@ public class TicTacToeGameManager extends GameManager {
         String computerSymbol = gamesProperties.getProperty(TicTacToeConfiguration.getComputerSymbolKey());
         String player1Symbol = gamesProperties.getProperty(TicTacToeConfiguration.getPlayer1SymbolKey());
         String player2Symbol = gamesProperties.getProperty(TicTacToeConfiguration.getPlayer2SymbolKey());
+        String gameMode = gamesProperties.getProperty(TicTacToeConfiguration.getGameModeKey());
 
         List<Player> players = new ArrayList<>();
         players.add(new Computer("Computer", computerSymbol));
         players.add(new Human("Player1", player1Symbol));
         players.add(new Human("Player2", player2Symbol));
 
-        game = new TicTacToeGame(ticTacToePlayground, players);
+        game = new TicTacToeGame(ticTacToePlayground, players, GameMode.valueOf(gameMode));
         return game;
     }
 

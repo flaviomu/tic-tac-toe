@@ -18,10 +18,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class TicTacToeGameTest {
 
+    private GameMode gameMode = GameMode.valueOf(TicTacToeConfiguration.getGameModeDefault());
     private int playgroundSize = TicTacToeConfiguration.getPlaygroundSizeDefault();
     private TicTacToePlayground playground;
     private TicTacToeGame game;
     private List<Player> players;
+
 
     /**
      * Sets up the list of the @{@link TicTacToePlayer} players
@@ -43,7 +45,7 @@ class TicTacToeGameTest {
     @BeforeEach
     void setUp() {
         playground = new TicTacToePlayground(playgroundSize);
-        game = new TicTacToeGame(playground, players);
+        game = new TicTacToeGame(playground, players, gameMode);
     }
 
 
@@ -60,7 +62,7 @@ class TicTacToeGameTest {
             playground.updatePlayground(move);
         }
 
-        assertTrue(game.isGameWon(move));
+        assertTrue(game.isGameWon(move, gameMode));
     }
 
     /**
@@ -76,7 +78,7 @@ class TicTacToeGameTest {
             playground.updatePlayground(move);
         }
 
-        assertTrue(game.isGameWon(move));
+        assertTrue(game.isGameWon(move, gameMode));
     }
 
     /**
@@ -91,7 +93,7 @@ class TicTacToeGameTest {
             playground.updatePlayground(move);
         }
 
-        assertTrue(game.isGameWon(move));
+        assertTrue(game.isGameWon(move, gameMode));
     }
 
     /**

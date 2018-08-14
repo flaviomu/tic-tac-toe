@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class TicTacToeGame extends Game {
 
     private final String NAME = "TicTacToe";
+    private final GameMode gameMode;
     private Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private TicTacToePlayground ticTacToePlayground;
@@ -39,10 +40,11 @@ public class TicTacToeGame extends Game {
      * @param players the list of @{@link Player} players who are playing the game
      *
      */
-    public TicTacToeGame(TicTacToePlayground ticTacToePlayground, List<Player> players) {
+    public TicTacToeGame(TicTacToePlayground ticTacToePlayground, List<Player> players, GameMode gameMode) {
         super.setName(NAME);
         this.ticTacToePlayground = ticTacToePlayground;
         this.players = players;
+        this.gameMode = gameMode;
 
         this.bonusMoveScheduler = new ScheduledThreadPoolExecutor(1);
         this.actualPlayingTimes = new HashMap<>();
@@ -133,7 +135,7 @@ public class TicTacToeGame extends Game {
             log.info("Game " + this.getName() + " -> Playground State:");
             ticTacToePlayground.printPlayground();
 
-            if (isGameWon(move)) {
+            if (isGameWon(move, gameMode)) {
                 // TODO cancel bonus move callable
                 if (bonusMoveTimerActive) {
                     if (bonusMoveTimerFuture.cancel(true))
@@ -204,8 +206,8 @@ public class TicTacToeGame extends Game {
      * @return True if the move determine a victory, False otherwise
      */
     @Override
-    protected boolean isGameWon(Move move) {
-        return ticTacToePlayground.isGameWon(move);
+    protected boolean isGameWon(Move move, GameMode gameMode) {
+        return ticTacToePlayground.isGameWon(move, gameMode);
     }
 
 

@@ -20,11 +20,13 @@ public class TicTacToeConfiguration {
     private static final String computerSymbolKey = ticTacToePrefixKey + "computer-symbol";
     private static final String player1SymbolKey = ticTacToePrefixKey + "player1-symbol";
     private static final String player2SymbolKey = ticTacToePrefixKey + "player2-symbol";
+    private static final String gameModeKey = ticTacToePrefixKey + "game-mode";
 
     private static final Integer PLAYGROUND_SIZE_DEFAULT = 3;
     private static final String COMPUTER_SYMBOL_DEFAULT = "C";
     private static final String PLAYER1_SYMBOL_DEFAULT = "1";
     private static final String PLAYER2_SYMBOL_DEFAULT = "2";
+    private static final String GAME_MODE_DEFAULT = "CLASSIC";
 
     private Properties properties;
 
@@ -54,6 +56,11 @@ public class TicTacToeConfiguration {
             properties.setProperty(player2SymbolKey, configurations.getProperties().getProperty(player2SymbolKey));
         else
             properties.setProperty(player2SymbolKey, PLAYER2_SYMBOL_DEFAULT);
+
+        if (configurations.getProperties().containsKey(gameModeKey))
+            properties.setProperty(gameModeKey, configurations.getProperties().getProperty(gameModeKey));
+        else
+            properties.setProperty(gameModeKey, GAME_MODE_DEFAULT);
     }
 
     /*public TicTacToeConfiguration(String propertiesFileName) {
@@ -95,6 +102,10 @@ public class TicTacToeConfiguration {
         return player2SymbolKey;
     }
 
+    public static String getGameModeKey() {
+        return gameModeKey;
+    }
+
     public static Integer getPlaygroundSizeDefault() {
         return PLAYGROUND_SIZE_DEFAULT;
     }
@@ -111,6 +122,9 @@ public class TicTacToeConfiguration {
         return PLAYER2_SYMBOL_DEFAULT;
     }
 
+    public static String getGameModeDefault() {
+        return GAME_MODE_DEFAULT;
+    }
 
     /*
         Loads the default properties values
