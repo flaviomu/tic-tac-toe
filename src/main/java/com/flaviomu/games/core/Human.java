@@ -42,7 +42,13 @@ public class Human extends PlayerImpl implements TicTacToePlayer {
         TicTacToeMove move;
 
         while(true) {
-            move = getTicTacToeMove(ticTacToePlayground);
+            try {
+                move = getTicTacToeMove(ticTacToePlayground);
+            }
+            catch (NumberFormatException e) {
+                System.out.println("\n\tMove not valid. Please, insert a new move.\n");
+                continue;
+            }
 
             if (ticTacToePlayground.isValidMove(move))
                 break;
